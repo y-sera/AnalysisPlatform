@@ -245,8 +245,8 @@ def trace_log(keys=None, vals=None, save_log=True, output_key=None, send_ga=Fals
                     save_trace_log_db(data_frame=df)
 
                 # send data to GA
-                if current_app.config.get('IS_SEND_GOOGLE_ANALYTICS') and send_ga:
-                    send_google_analytic()
+                #if current_app.config.get('IS_SEND_GOOGLE_ANALYTICS') and send_ga:
+                #    send_google_analytic()
 
             except Exception as e:
                 # save trace error
