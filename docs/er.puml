@@ -1,0 +1,416 @@
+@startuml
+hide circle
+entity "cfg_constant" {
+    * id: Integer<<PK, Not Null, Auto Increment>>
+    --
+    * type: Text
+    * name: Text
+    * value Text
+    --
+    * created_at Text
+    * updated_at Text
+}
+
+entity "cfg_csv_column" {
+    * id: Integer <<PK, Not Null>>
+    --
+    * data_source_id: Integer<<FK>>
+    * column_name: Text
+    * data_type: Text
+    * order: Integer
+    --
+    * created_at: Text
+    * updated_at: Text
+}
+
+
+
+entity "cfg_data_source" {
+    * id: Integer<<PK, Not Null, Auto Increment>>
+    --
+    * name: Text
+    * type: Text
+    * comment: Text
+    * order: Integer
+    --
+    * created_at: Text
+    * created_at: Text
+}
+
+entity "cfg_data_source_csv" {
+  * id: Integer<<PK, FK, Not Null>>
+  --
+  * directory: Text
+  * skip_head: Integer
+  * skip_tail: Integer
+  * delimiter: Text
+  * etl_func: Text
+  --
+  * created_at: Text
+  * updated_at: Text
+  --
+  * process_name: Text
+  * dummy_header: Boolean
+  * n_rows: Integer
+  * is_transpose: Boolean
+}
+
+entity "cfg_data_source_db" {
+    * id: Integer <<PK, FK, Not Null>>
+    --
+    * host: Text
+    * port: Integer
+    * dbname: Text
+    * schema: Text
+    * username: Text
+    * password: Text
+    * hashed: Boolean
+    * use_os_timezone: Boolean
+    --
+    * created_at: Text
+    * updated_at: Text
+}
+
+entity "cfg_filter" {
+    * id: Integer <<PK, Not Null, Auto Increment>>
+    --
+    * process_id: Integer<<FK>>
+    * column_id: Integer<<FK>>
+    * filter_type: Text
+    * parente_id: Integer <<FK, id>>
+    --
+    * created_at: Text
+    * updated_at: Text
+}
+
+entity "cfg_filter_detail" {
+    * id: Integer <<PK, Not Null, Auto Increment>>
+    --
+    * filter_id: Integer <<FK>>
+    * parente_detail_id: Integer <<FK, id>>
+    * name: Text
+    * filter_condition: Text
+    * filter_function: Text
+    * filter_from_pos: Integer
+    * order: Integer
+    --
+    * created_at: Text
+    * updated_at: Text
+}
+
+entity "cfg_option" {
+    * id: INteger<<PK>>
+    --
+    * optin: Text
+    * req_id: Text<<FK>>
+    --
+    * created_at: Text
+    * updated_at: Text
+}
+
+entity "cfg_process" {
+    * id: <<PK, Not Null, Auto Increment>>
+    --
+    * name: Text
+    * data_source_id: Integer<<FK>>
+    * table_name: Text
+    * comment: Text
+    * order: Integer
+    --
+    * created_at: Text
+    * updated_at: Text
+    --
+    * name_jp: Text
+    * name_en: Text
+    * name_local: Text
+    * file_name: Text
+    * parent_id: cfg_process(id)
+    * is_show_file_name: Boolean
+}
+
+entity "cfg_process_column" {
+    * id: Integer<<PK, Not Null, Auto Increment>>
+    --
+    * process_id: Integer<<FK>>
+    * column_name: Text
+    * english_name: Text
+    * name: Text
+    * data_type: Text
+    * operator: Text
+    * coef: Text
+    * column_type: Integer
+    * is_serial_no: Boolean
+    * is_get_date: Boolean
+    * is_auto_increment: Boolean
+    * order: Ingeter
+    --
+    * created_at: Text
+    * updated_at: Text
+    --
+    * predict_type: Text
+    * is_dummy_datetime: Boolean
+    * name_jp: Text
+    * raw_data_type: Text
+    * name_en: Text
+    * name_local: Text
+    * column_raw_name: Text
+    * parent_id: Integer<<FK>>
+}
+
+entity "cfg_process_function_column" {
+    * id: Integer<<PK, FK, Not Null>>
+    --
+    * function_id: Integer
+    * var_x: Integer
+    * var_y: Integer
+    * var_z: Integer
+    * return_type: Text
+    * note: Text
+    --
+    * created__at: Text
+    * updated_at: Text
+    --
+    * a: Text
+    * b: Text
+    * c: Text
+    * n: Text
+    * k: Text
+    * s: Text
+    * t: Text
+    * order: Integer
+    * process_column_id: Integer
+}
+
+entity "cfg_process_unused_column" {
+    * id: Integer<<PK, Not Null, Auto Increment>>
+    --
+    * process_id: Integer
+    * column_name: Text
+    --
+    * created_at: Text
+    * updated_at: Text
+}
+
+entity "cfg_request" {
+  * id: Text <<PK, Not Null>>
+  --
+  * params: Text
+  * odf: Text
+  --
+  * created_at: Text
+  * updated_at: Text
+}
+
+entity "cfg_trace" {
+    * id: Integer<<PK, Not Null, Auto Increment>>
+    --
+    * self_process_id: Integer<<FK>>
+    * target_process_id: Integer<<FK>>
+    * is_trace_backward: Boolean
+    --
+    * created_at: Text
+    * updated_at: Text
+}
+
+entity "cfg_trace_key" {
+    * id: Integer<<PK, Not Null, Auto Increment>>
+    --
+    * trace_id: Integer<<FK>>
+    * self_column_id: Integer<<FK>>
+    * self_column_substr_from: Integer
+    * self_column_substr_to: Integer
+    * target_column_id: Integer<<FK>>
+    * target_column_substr_from: Integer
+    * target_column_substr_to: Integer
+    * order: Integer
+    --
+    * created_at: Text
+    * updated_at: Text
+    --
+    * delta_time: Integer
+    * cut_off: Integer
+}
+
+entity "cfg_user_setting" {
+    * id: Integer<<PK, NOt Null, Auto Increment>>
+    * key: Text
+    * title: Text
+    * page: Text
+    * created_by: Text
+    * priority: Integer
+    * use_current_time: Boolean
+    * description: Text
+    * share_info: Boolean
+    * settings: Text
+    --
+    * created_at: Text
+    * updated_at: Text
+    --
+    * save_graph_settings: Boolean
+}
+
+entity "cfg_visualization" {
+    * id: Integer<<PK, Not Null, AUto Increment>>
+    * process_id: Integer<<FK>>
+    * control_column_id: Integer<<FK>>
+    * filter_column_id: Integer<<FK>>
+    * filter_value: Text
+    * is_from_data: Boolean
+    * filter_detail_id: Integer<<FK>>
+    * ucl: Float
+    * lcl: Float
+    * upcl: Float
+    * lpcl: Float
+    * ymax: Float
+    * ymin: Float
+    * act_from: Text
+    * act_to: Text
+    * order: Integer
+    --
+    * created_at: Text
+    * updated_at: Text
+    * deleted_at: Text
+}
+
+entity "m_function" {
+    * id: Integer
+    * function_type: Text
+    * function_name_en: Text
+    * function_name_jp: Text
+    * description_en: Text
+    * description_jp: Text
+    * x_type: Text
+    * y_type: Text
+    * return_type: Text
+    * show_serial: Boolean
+    * a: Text
+    * b: Text
+    * c: Text
+    * n: Text
+    * k: Text
+    * s: Text
+    * t: Text
+    --
+    * created_at: Text
+    * updated_at: Text
+}
+
+entity "t_abnormal_trace_log" {
+    * id: Integer<<PK, Not Null>>
+    --
+    * data_time: Text
+    * dataset_id: Text
+    * log_level: Text
+    * event_type: Text
+    * event_action: Text
+    * location: Text
+    * return_code: Text
+    * message: Text
+    * dumpfile: Text
+}
+
+entity "t_app_log" {
+    * id: Integer<<PK, Not Null>>
+    * ip: Text
+    * action: Text
+    * description: Text
+    * created_at: Text
+}
+
+entity "t_csv_import" {
+    * id: Integer<<PK, Not Null, Auto Increment>>
+    * ip: Text
+    * action: Text
+    * description: Text
+    * created_at: Text
+}
+
+entity "t_data_trace_log" {
+   * id: Integer<<PK, Not Null>>
+    --
+    * data_time: Text
+    * dataset_id: Text
+    * event_type: Text
+    * event_action: Text
+    * target: Text
+    * exe_time: Integer
+    * data_size: Integer
+    * rows: Integer
+    * cols: Integer
+    * dumpfile: Text
+    --
+    * created_at: Text
+    * updated_at: Text
+}
+
+entity "t_factory_import" {
+    * id: Integer<<PK, Not Null, Auto Increment>>
+    * job_id: Integer<<FK>>
+    * process_id: Integer
+    * import_type: Text
+    * import_from: Text
+    * import_to: Text
+    * start_tm: Text
+    * end_tm: Text
+    * imported_row: Integer
+    * status: Text
+    * error_msg: Text
+    --
+    * created_at: Text
+    * updated_at: Text
+}
+
+entity "t_job_management" {
+    * id: Integer<<PK, Not Null, Auto Increment>>
+    --
+    * job_type: Text
+    * db_code: Text
+    * db_name: Text
+    * process_id: Integer
+    * process_name: Text
+    * start_tm: Text
+    * end_tm: Text
+    * status: Text
+    * done_percent: Float
+    * duration: Float
+    * error_msg: Text
+    --
+    * created_at: Text
+    * updated_at: Text
+}
+
+entity "t_proc_link" {
+    * id: Integer<<PK, Not Null>>
+    --
+    * job_id: Integer <<FK>>
+    * process_id: Integer <<FK>>
+    * target_process_id: Integer<<FK>>
+    * matched_count: Integer
+    --
+    * created_at: Text
+    * created_at: Text
+}
+
+cfg_csv_column ||..o{ cfg_data_source_csv
+cfg_data_source_csv ||..o{ cfg_data_source
+cfg_data_source_db ||..o{ cfg_data_source
+cfg_filter ||..o{ cfg_process
+cfg_filter ||..o{ cfg_process_column
+cfg_filter ||..o{ cfg_filter_detail
+cfg_process ||..o{ cfg_data_source
+cfg_option ||..o{ cfg_request
+t_proc_link ||..o{ cfg_process
+t_proc_link ||..o{ t_job_management
+t_factory_import ||..o{ t_job_management
+cfg_trace ||..o{ cfg_process
+cfg_trace_key ||..o{ cfg_trace
+cfg_trace_key ||..o{ cfg_process_column
+cfg_process_unused_column ||..o{ cfg_process
+cfg_process_function_column ||..o{ cfg_process_column
+cfg_visualization ||..o{ cfg_process
+cfg_visualization ||..o{ cfg_process_column
+cfg_visualization ||..o{ cfg_filter_detail
+cfg_process_column ||..o{ cfg_process_column
+cfg_process_column ||..o{ cfg_process
+
+@enduml

@@ -10,7 +10,7 @@ init/app.sqlite3
 init/app.sqlite3.dll
 
 start_ap/
-
+docs/
 package.json
 package-lock.json
 
