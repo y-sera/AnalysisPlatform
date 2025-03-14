@@ -24,9 +24,6 @@ RUN apt-get update && \
     apt-get install --no-install-suggests --no-install-recommends --yes r-base libpq-dev
 COPY --from=build-venv /venv /venv
 COPY . /app
-<<<<<<< HEAD
-=======
 COPY --from=build-dbfile /app.sqlite3 /app/init/
->>>>>>> on-docker
 WORKDIR /app
 ENTRYPOINT ["/venv/bin/python3", "main.py", "7770"]
