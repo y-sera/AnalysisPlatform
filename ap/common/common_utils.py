@@ -1259,51 +1259,6 @@ def get_ip_address():
 
     return ip_addr
 
-
-def check_client_browser(client_request):
-    is_valid_browser = False
-    is_valid_version = True
-    safari_support_version = str(SAFARI_SUPPORT_VER).split('.')  # >= ver15.4
-
-    request_env = client_request.headers.environ
-    http_ch_ua = request_env.get('HTTP_SEC_CH_UA') if request_env else None
-    http_user_agent = request_env.get('HTTP_USER_AGENT') if request_env else client_request.user_agent
-
-    # Windows
-    if http_ch_ua:
-        if 'Google Chrome' in http_ch_ua or 'Microsoft Edge' in http_ch_ua:
-            is_valid_browser = True
-            is_valid_version = True
-
-        return is_valid_browser, is_valid_version
-
-    # iOS
-    if http_user_agent:
-        if 'Edg' in http_user_agent:
-            is_valid_browser = True
-
-        if 'Safari' in http_user_agent:
-            is_valid_browser = True
-            user_agents = http_user_agent.split('Version/')
-            if len(user_agents) == 1:
-                # chrome in ios
-                return is_valid_browser, is_valid_version
-
-            [safari_version, _] = user_agents[1].split(' Safari/')
-            if safari_version:
-                versions = safari_version.split('.')
-                v1 = versions[0]
-                v2 = 0
-                if len(versions) > 1:
-                    v2 = versions[1]
-
-                is_valid_version = (int(v1) > int(safari_support_version[0])) or (
-                    int(v1) == int(safari_support_version[0]) and int(v2) >= int(safari_support_version[1])
-                )
-
-    return is_valid_browser, is_valid_version
-
-
 def gen_transaction_table_name(proc_id: int):
     return f't_process_{proc_id}'
 

@@ -23,7 +23,6 @@ from sqlalchemy.orm import create_session, scoped_session
 from ap.common.common_utils import (
     DATE_FORMAT_STR,
     NoDataFoundException,
-    check_client_browser,
     check_exist,
     count_file_in_folder,
     find_babel_locale,
@@ -47,7 +46,6 @@ from ap.common.constants import (
     SERVER_ADDR,
     SHUTDOWN,
     SQLITE_CONFIG_DIR,
-    TESTING,
     UNIVERSAL_DB_FILE,
     YAML_CONFIG_AP,
     YAML_CONFIG_BASIC,
@@ -85,7 +83,6 @@ dic_config = {
     SQLITE_CONFIG_DIR: None,
     APP_DB_FILE: None,
     UNIVERSAL_DB_FILE: None,
-    TESTING: None,
     SHUTDOWN: None,
     PORT: None,
 }
@@ -252,9 +249,6 @@ def create_app(object_name=None, is_main=False):
     dic_config[UNIVERSAL_DB_FILE] = app.config[UNIVERSAL_DB_FILE]
     make_dir(dic_config[UNIVERSAL_DB_FILE])
 
-    # testing param
-    dic_config[TESTING] = app.config.get(TESTING, None)
-
     # check and create instance folder before run db init
     if not check_exist(dic_config[SQLITE_CONFIG_DIR]):
         make_dir(dic_config[SQLITE_CONFIG_DIR])
@@ -414,20 +408,6 @@ def create_app(object_name=None, is_main=False):
         is_ignore_content = any(resource_type.endswith(extension) for extension in LOG_IGNORE_CONTENTS)
         if not is_ignore_content and request.blueprint != EXTERNAL_API:
             bind_user_info(request)
-
-            if not dic_config.get(TESTING):
-                is_valid_browser, is_valid_version = check_client_browser(request)
-                if not is_valid_version:
-                    # safari not valid version
-                    g.is_valid_version = True
-
-                if not is_valid_browser:
-                    # browser not valid
-                    content = {
-                        'title': _('InvalidBrowserTitle'),
-                        'message': _('InvalidBrowserContent'),
-                    }
-                    return render_template('none.html', **content)
 
     @app.after_request
     def after_request_callback(response: Response):
