@@ -1,7 +1,6 @@
 import atexit
 import multiprocessing
 import os
-import uuid
 from multiprocessing.managers import BaseManager, DictProxy
 from queue import Queue
 from typing import Any
@@ -57,20 +56,7 @@ class CustomManager(BaseManager):
 
     @classmethod
     def _generate_new_address(cls):
-        if os.name == 'nt':
-            # create unique identifier for address
-            unique_identifier = uuid.uuid4().hex
-
-            # fixed unique address use for connecting to multiprocess pipe
-            address = rf'\\.\pipe\__custom_manager_address_multi_processes_{os.getpid()}_{unique_identifier}'
-            # make sure our uuid does not incorrectly create un-trimmed string
-            address = address.strip()
-
-            # lock the file before writing
-            with filelock.FileLock(cls.__lock_path), open(cls.__address_path, 'w', encoding='utf-8') as f:
-                f.write(address)
-        elif os.name == 'posix':
-            address = ('127.0.0.1', 5000)
+        address = ('127.0.0.1', 5000)
         return address
 
     @classmethod

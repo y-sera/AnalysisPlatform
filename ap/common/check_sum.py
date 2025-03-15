@@ -27,10 +27,6 @@ def check_sum():
                 diff_str = '\n'.join(missing_files[:show_missing_file_count])
                 if len(missing_files) > show_missing_file_count:
                     diff_str += '\n...'
-                if os.name == 'nt':
-                    import ctypes
-                    ctypes.windll.user32.MessageBoxW(0, f'File Not Found :\n{diff_str}', 'Information', 0)
-                else:
                     logger.info(f'File Not Found :\n{diff_str}')
             except Exception as e:
                 logger.exception(e)

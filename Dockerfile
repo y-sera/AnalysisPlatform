@@ -21,7 +21,8 @@ RUN apt-get update && apt-get install --no-install-suggests --no-install-recomme
 #FROM gcr.io/distroless/python3-debian12
 FROM python:3.9-slim AS prod
 RUN apt-get update && \
-    apt-get install --no-install-suggests --no-install-recommends --yes r-base libpq-dev
+    apt-get install --no-install-suggests --no-install-recommends --yes r-base libpq-dev && \
+    apt-get clean
 COPY --from=build-venv /venv /venv
 COPY . /app
 COPY --from=build-dbfile /app.sqlite3 /app/init/

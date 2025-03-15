@@ -13,7 +13,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-SCREEN_SHOT_FOLDER = Path('C:/') / 'workspace' / 'CICD' / 'frontend' / 'screenshot'
+SCREEN_SHOT_FOLDER = Path('/') / 'workspace' / 'CICD' / 'frontend' / 'screenshot'
 ROOT_PATH = Path(__file__).parent.parent.parent
 INIT_BASIC_CONFIG_FILE = ROOT_PATH / 'init' / 'basic_config.yml'
 BASIC_CONFIG_FILE = ROOT_PATH / 'ap' / 'config' / 'basic_config.yml'
