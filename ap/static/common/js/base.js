@@ -1,6 +1,4 @@
 // eslint-disable no-undef, no-unused-vars
-// term of use
-validateTerms();
 const GA_TRACKING_ID = 'G-9DJ9TV72B5';
 const HEART_BEAT_MILLI = 2500;
 const RE_HEART_BEAT_MILLI = HEART_BEAT_MILLI * 4;

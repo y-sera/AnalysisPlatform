@@ -9,7 +9,6 @@ from ap.common.common_utils import (
     get_about_md_file,
     get_error_trace_path,
     get_files,
-    get_terms_of_use_md_file,
     get_wrapr_path,
     sort_processes_by_parent_children_relationship,
 )
@@ -123,18 +122,6 @@ def about():
     markdown_file_path = get_about_md_file()
     css, html = markdown_to_html(markdown_file_path)
     return render_template('about.html', css=css, content=html)
-
-
-@setting_module_blueprint.route('/terms_of_use', methods=['GET'])
-def term_of_use():
-    """
-    term of use page
-    """
-    current_locale = get_locale()
-    markdown_file_path = get_terms_of_use_md_file(current_locale)
-    css, html = markdown_to_html(markdown_file_path)
-    return render_template('terms_of_use.html', css=css, content=html, do_not_send_ga=True)
-
 
 @setting_module_blueprint.route('/config/master')
 def master_config():

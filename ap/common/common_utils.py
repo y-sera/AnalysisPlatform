@@ -654,16 +654,6 @@ def get_about_md_file():
     file_name = 'Endroll.md'
     return resource_path(folder_name, file_name, level=AbsPath.SHOW)
 
-
-def get_terms_of_use_md_file(current_locale):
-    """
-    get about markdown file path
-    """
-    folder_name = 'about'
-    file_name = 'terms_of_use_jp.md' if current_locale.language == 'ja' else 'terms_of_use_en.md'
-    return resource_path(folder_name, file_name, level=AbsPath.SHOW)
-
-
 def get_wrapr_path():
     """get wrap r folder path
 
