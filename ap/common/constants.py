@@ -150,8 +150,6 @@ class ErrorMsg(Enum):
 
 
 # YAML Keywords
-YAML_INFO = 'info'
-YAML_R_PATH = 'r-path'
 YAML_PROC = 'proc'
 YAML_SQL = 'sql'
 YAML_FROM = 'from'
@@ -580,8 +578,6 @@ SQL_REGEXP_FUNC = 'REGEXP'
 # DATA TRACE LOG CONST
 # Measurement Protocol Server
 MPS = 'www.google-analytics.com'
-R_PORTABLE = 'R-Portable'
-R_LIB_VERSION = 'R_LIB_VERSION'
 GTAG_DEFAULT_TIMEOUT = 3
 
 # Message

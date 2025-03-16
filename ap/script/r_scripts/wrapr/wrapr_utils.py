@@ -15,11 +15,10 @@ class CallR:
     # It is safe to set Sys.setenv(lang="en"), and set encoding="utf-8" when loading R file
     # Also it is necessary to define .libPaths() to './path/to/R-PORTABLE/library' to ensure that we load libraies from R-PORTABLE
     # (I think pyper goes wrong when multibyte string is printed)
-    def __init__(self, r_exe=None, py_exe=None, use_reticulate=False, verbose=False):
+    def __init__(self, use_reticulate=False, verbose=False):
         """
         Start R session
         Inputs:
-            r_exe (str) path to R executable (optional)
             verbose (bool) if True, prints R call
         Notes:
             Sys.setenv(lang="en") is to not print R message in multibyte string
@@ -28,14 +27,7 @@ class CallR:
         self.verbose = verbose
 
         # start R with specified binary
-        if r_exe is None:
-            self.r_session = pyper.R()
-        else:
-            # start specified r executable and .libPaths()
-            self.r_session = pyper.R(RCMD=r_exe)
-            self.run_expr('.libPaths(c(""))')
-            libpath = os.path.join(os.path.dirname(os.path.dirname(r_exe)), "library")
-            self.run_expr('.libPaths(c("{}"))'.format(libpath))
+        self.r_session = pyper.R()
 
         self.run_expr('options(encoding = "utf-8")')
         self.run_expr('Sys.setenv(LANG="en")')
@@ -43,8 +35,6 @@ class CallR:
 
         # specify Python binary and load reticulate
         if use_reticulate:
-            if py_exe is not None:
-                self.run_expr('Sys.setenv(RETICULATE_PYTHON = "{}")'.format(py_exe))
             self.run_expr("library(reticulate)")
 
     def get_obj(self, obj: str):
@@ -112,7 +102,6 @@ class RPipeline:
         verbose=True,
         use_rds=False,
         use_pkl=True,
-        use_r_portable=True,
     ):
         """
         Start R process
@@ -126,10 +115,6 @@ class RPipeline:
             use_rds   (bool) If True, .rds file will be used if possible.
             use_pkl   (bool) If False, final result of executed function will be returned by pyper (not by pickle).
                              Use with care (passing complex / multibyte data by pyper may cause errors)
-            use_r_portable (bool) If True, finds R.exe inside path/to/R-PORTABLE/bin .
-                                  also finds python.exe inside path/to/R-PORTABLE/python/* .
-                                  path/to/R-PORTABLE must be defined in environmental variable `R-PORTABLE`.
-                                  If False (or R-PORTABLE is not defined), R and Python executable will be automatically searched.
         """
         # file name of wrapr and directory name is hard coded..
         FNAME_WRAPPER = "wrapr.R"
@@ -140,27 +125,12 @@ class RPipeline:
         self.verbose = verbose
         self.use_rds = use_rds
         self.use_pkl = use_pkl
-        self.use_r_portable = use_r_portable
-
-        self.rportable_path = os.environ.get('R-PORTABLE')
-        self.dir_log = "." if self.rportable_path is None else os.path.join(self.rportable_path, "../log")
         self.dir_log = self.dir_log if os.path.exists(self.dir_log) else "."
         self.ptime_sec = {}
 
         with self._timer("start R process"):
-            # set R portable and python embeddable
-            # set path to python binary as environmental variable 'RETICULATE_PYTHON' for reticulate.
-            rpath = None
-            pypath = None
-            if self.rportable_path is not None and (os.name == 'nt'):
-                rpath = os.path.join(self.rportable_path, "bin", "R.exe")
-                logger.info("`R-PORTABLE` : {}".format(self.rportable_path))
-            if (self.use_pkl is True) and (self.rportable_path is not None) and (os.name == 'nt'):
-                pypath = glob.glob("{}/python/python-*/python.exe".format(self.rportable_path))[0]
-                logger.info("python binary : {}".format(pypath))
-
             # start R process and load wrapper function
-            self.r = CallR(rpath, pypath, self.use_pkl, self.verbose)
+            self.r = CallR(self.use_pkl, self.verbose)
             fname_wrapper = os.path.join(self.dir_wrapr, FNAME_WRAPPER)
             self.r.load_rfile(fname_wrapper)
 

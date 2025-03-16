@@ -20,12 +20,6 @@ class Config(object):
     CICD_BASE_DIR = os.environ.get('CICD_BASE_DIR')
     parent_dir = CICD_BASE_DIR if CICD_BASE_DIR else os.path.dirname(basedir)
 
-    R_PORTABLE = os.path.join(parent_dir, 'R-Portable', 'bin')
-    os.environ['PATH'] = '{}:{}'.format(R_PORTABLE, os.environ.get('PATH', ''))
-
-    # R-PORTABLEを設定する。
-    os.environ['R-PORTABLE'] = os.path.join(parent_dir, 'R-Portable')
-
     ORACLE_PATH = os.path.join(parent_dir, 'Oracle-Portable')
     os.environ['PATH'] = '{}:{}'.format(ORACLE_PATH, os.environ.get('PATH', ''))
 
@@ -33,7 +27,6 @@ class Config(object):
     os.environ['PATH'] = '{}:{}'.format(ORACLE_PATH_WITH_VERSION, os.environ.get('PATH', ''))
 
     logger.info(os.environ['PATH'])
-    logger.info(R_PORTABLE)
 
     BABEL_DEFAULT_LOCALE = 'en'
 

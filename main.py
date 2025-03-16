@@ -141,14 +141,6 @@ if is_main:
         # delete req_id created > 24h ago
         add_job_delete_expired_request()
 
-    # TODO : OSS
-    # check and update R-Portable folder
-    # should_update_r_lib = os.environ.get('UPDATE_R', 'false')
-    # if should_update_r_lib and should_update_r_lib.lower() in true_values:
-    #     from ap.script.check_r_portable import check_and_copy_r_portable
-    #
-    #     check_and_copy_r_portable()
-
     # add job when app started
     add_backup_dbs_job()
 
