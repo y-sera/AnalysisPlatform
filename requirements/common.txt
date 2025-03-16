@@ -35,9 +35,9 @@ chardet==3.0.4
 detect-delimiter==0.1.1
 Flask-Compress==1.10.1
 group-lasso==1.5.0
-mecab-python3==1.0.5
+mecab-python3==1.0.10
 unidic-lite==1.0.8
-fugashi==1.1.2
+fugashi==1.2.1
 cutlet==0.1.19
 pyarrow==9.0.0
 waitress==2.1.2

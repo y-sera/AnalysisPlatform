@@ -1527,7 +1527,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ### fugashi
 
-* Version: 1.1.2
+* Version: 1.2.1
 * Copyright (c) 2019 Paul O'Leary McCann
 
 > licensed under the <a href="http://opensource.org/licenses/MIT">MIT License</a>
@@ -1668,7 +1668,7 @@ as follows:
 
 ### mecab-python3
 
-* Version: 1.0.5
+* Version: 1.0.10
 * MeCab is copyrighted free software by Taku Kudo <taku@chasen.org> and
 Nippon Telegraph and Telephone Corporation, and is released under
 any of the GPL (see the file GPL), the LGPL (see the file LGPL), or the
