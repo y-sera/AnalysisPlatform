@@ -461,22 +461,13 @@ def resource_path(*relative_path, level=AbsPath.SHOW):
 
 # class RUtils:
 #     def __init__(self, package, *args, **kwargs):
-#         # r instance
-#         r_portable_env = os.environ.get('R-PORTABLE')
-#         if r_portable_env:
-#             self.r_exe = os.path.join(r_portable_env, 'bin', 'R.exe')
-#             self.r_library = os.path.join(r_portable_env, 'library')
-#         else:
-#             self.r_exe = resource_path(R_PORTABLE, 'bin', 'R.exe', level=AbsPath.SHOW)
-#             self.r_library = resource_path(R_PORTABLE, 'library', level=AbsPath.SHOW)
 #
-#         # specify R-Portable execution
-#         self.r = pyper.R(RCMD=self.r_exe, *args, **kwargs)
+#         # specify R
+#         self.r = pyper.R()
 #         logger.info(self.r('Sys.getenv()'))
 #
-#         # specify R-Portable library
+#         # specify R library
 #         self.r('.libPaths(c(""))')
-#         self.r(f'.libPaths(c("{self.r_library}"))')
 #         logger.info(self.r('.libPaths()'))
 #
 #         # R package folder
