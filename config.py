@@ -17,16 +17,6 @@ class Config(object):
     PORT = 80
 
     os.environ['FLASK_ENV'] = os.environ.get('FLASK_ENV', 'production')
-    CICD_BASE_DIR = os.environ.get('CICD_BASE_DIR')
-    parent_dir = CICD_BASE_DIR if CICD_BASE_DIR else os.path.dirname(basedir)
-
-    ORACLE_PATH = os.path.join(parent_dir, 'Oracle-Portable')
-    os.environ['PATH'] = '{}:{}'.format(ORACLE_PATH, os.environ.get('PATH', ''))
-
-    ORACLE_PATH_WITH_VERSION = os.path.join(ORACLE_PATH, 'instantclient_21_3')
-    os.environ['PATH'] = '{}:{}'.format(ORACLE_PATH_WITH_VERSION, os.environ.get('PATH', ''))
-
-    logger.info(os.environ['PATH'])
 
     BABEL_DEFAULT_LOCALE = 'en'
 
