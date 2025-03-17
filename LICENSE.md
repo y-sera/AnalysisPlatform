@@ -1317,7 +1317,7 @@ SOFTWARE.
 
 ### chardet
 
-* Version: 3.0.4
+* Version: 5.2.0
 * Copyright (C) 2006, 2007, 2008 Mark Pilgrim
 *
 * This library is free software; you can redistribute it and/or
@@ -1476,7 +1476,7 @@ source code may be subject to regulation in your jurisdiction.
 
 ### cutlet
 
-* Version: 0.1.19
+* Version: 0.5.0
 * Copyright (c) 2020 Paul O'Leary McCann
 
 > licensed under the <a href="http://opensource.org/licenses/MIT">MIT License</a>
@@ -1565,7 +1565,7 @@ limitations under the License.
 
 ### jaconv
 
-* Version: 0.2.4
+* Version: 0.4.0
 * Copyright (c) 2014 Yukino Ikegami
 
 > licensed under the <a href="http://opensource.org/licenses/MIT">MIT License</a>
