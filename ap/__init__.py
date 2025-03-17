@@ -52,7 +52,6 @@ from ap.common.constants import (
     YAML_CONFIG_DB,
     YAML_CONFIG_PROC,
     YAML_CONFIG_VERSION,
-    YAML_START_UP,
     ApLogLevel,
     AppGroup,
     AppSource,
@@ -68,7 +67,6 @@ from ap.common.yaml_utils import (
     YAML_CONFIG_BASIC_FILE_NAME,
     YAML_CONFIG_DB_FILE_NAME,
     YAML_CONFIG_PROC_FILE_NAME,
-    YAML_START_UP_FILE_NAME,
     BasicConfigYaml,
 )
 from ap.equations.error import FunctionErrors, FunctionFieldError
@@ -276,7 +274,6 @@ def create_app(object_name=None, is_main=False):
     dic_yaml_config_file[YAML_CONFIG_DB] = os.path.join(yaml_config_dir, YAML_CONFIG_DB_FILE_NAME)
     dic_yaml_config_file[YAML_CONFIG_PROC] = os.path.join(yaml_config_dir, YAML_CONFIG_PROC_FILE_NAME)
     dic_yaml_config_file[YAML_CONFIG_AP] = os.path.join(yaml_config_dir, YAML_CONFIG_AP_FILE_NAME)
-    dic_yaml_config_file[YAML_START_UP] = os.path.join(os.getcwd(), YAML_START_UP_FILE_NAME)
 
     # check and copy basic config file if not existing
     init_config(dic_yaml_config_file[YAML_CONFIG_BASIC], app.config[INIT_BASIC_CFG_FILE])
@@ -311,19 +308,14 @@ def create_app(object_name=None, is_main=False):
     app.add_url_rule('/', endpoint='tile_interface.tile_interface')
 
     basic_config_yaml = BasicConfigYaml(dic_yaml_config_file[YAML_CONFIG_BASIC])
-    start_up_yaml = BasicConfigYaml(dic_yaml_config_file[YAML_START_UP])
     hide_setting_page = basic_config_yaml.get_node(['info', 'hide-setting-page'], False)
     default_log_level = basic_config_yaml.get_node(['info', LOG_LEVEL], ApLogLevel.INFO.name)
     is_default_log_level = default_log_level == ApLogLevel.INFO.name
     dic_yaml_config_instance[YAML_CONFIG_BASIC] = basic_config_yaml
-    dic_yaml_config_instance[YAML_START_UP] = start_up_yaml
 
-    lang = start_up_yaml.get_node(['setting_startup', 'language'], None)
-    sub_title = start_up_yaml.get_node(['setting_startup', 'subtitle'], '')
+    sub_title = ''
 
-    if lang is None or not lang:
-        lang = basic_config_yaml.get_node(['info', 'language'], False)
-
+    lang = basic_config_yaml.get_node(['info', 'language'], False)
     lang = find_babel_locale(lang)
     lang = lang or app.config['BABEL_DEFAULT_LOCALE']
 
@@ -580,11 +572,6 @@ def init_db(app):
 @log_execution_time()
 def get_basic_yaml_obj():
     return dic_yaml_config_instance[YAML_CONFIG_BASIC]
-
-
-@log_execution_time()
-def get_start_up_yaml_obj():
-    return dic_yaml_config_instance[YAML_START_UP]
 
 
 def get_app_group(app_source, user_group):

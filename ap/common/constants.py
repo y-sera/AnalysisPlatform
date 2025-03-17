@@ -33,7 +33,6 @@ REMOVED_OUTLIERS = 'outliers'
 CAST_INF_VALS = 'cast_inf_vals'
 
 YAML_CONFIG_BASIC = 'basic'
-YAML_START_UP = 'start_up'
 YAML_CONFIG_DB = 'db'
 YAML_CONFIG_PROC = 'proc'
 YAML_CONFIG_AP = 'ap'

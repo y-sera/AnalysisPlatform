@@ -25,7 +25,6 @@ YAML_TILE_INTERFACE_DN7 = 'tile_interface_dn7.yml'
 YAML_TILE_INTERFACE_AP = 'tile_interface_analysis_platform.yml'
 YAML_TILE_INTERFACE_USAGE = 'tile_interface_search_by_use.yml'
 YAML_TILE_JUMP = 'tile_interface_jump.yml'
-YAML_START_UP_FILE_NAME = 'startup.yaml'
 
 
 # class Singleton(type):

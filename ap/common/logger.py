@@ -355,11 +355,6 @@ def get_log_level(basic_config_yaml) -> int:
     return default_logger_level
 
 
-def is_enable_log_file(start_up_yaml) -> bool:
-    enable_file_log = start_up_yaml.get_node(keys=('setting_startup', 'enable_file_log'))
-    return enable_file_log is not None and str(enable_file_log).strip() == '1'
-
-
 def get_log_handlers(
     log_dir: str,
     log_level=logging.INFO,

@@ -2,11 +2,11 @@ import contextlib
 import logging
 import os
 
-from ap import SHUTDOWN, create_app, dic_config, get_basic_yaml_obj, get_start_up_yaml_obj, max_graph_config
+from ap import SHUTDOWN, create_app, dic_config, get_basic_yaml_obj, max_graph_config
 from ap.common import multiprocess_sharing
 from ap.common.constants import ANALYSIS_INTERFACE_ENV, PORT
 from ap.common.event_listeners import EventListener
-from ap.common.logger import LOG_FORMAT, get_log_handlers, get_log_level, is_enable_log_file
+from ap.common.logger import LOG_FORMAT, get_log_handlers, get_log_level
 from ap.common.multiprocess_sharing import EventQueue
 from ap.script.migrate_cfg_data_source_csv import migrate_skip_head_value
 
@@ -17,12 +17,11 @@ is_main = __name__ == '__main__'
 app = create_app('config.%sConfig' % env.capitalize(), is_main)
 
 basic_config_yaml = get_basic_yaml_obj()
-start_up_yaml = get_start_up_yaml_obj()
 
 log_handlers = get_log_handlers(
     log_dir=dic_config.get('INIT_LOG_DIR'),
     log_level=get_log_level(basic_config_yaml),
-    enable_log_file=is_enable_log_file(start_up_yaml),
+    enable_log_file=os.environ.get('ENABLE_LOG_FILE', False),
     is_main=is_main,
 )
 
@@ -56,10 +55,6 @@ if is_main:
     multiprocess_sharing.start_sharing_instance_server()
 
     port = None
-
-    dic_start_up = start_up_yaml.dic_config
-    if dic_start_up:
-        port = dic_start_up['setting_startup'].get('port', None)
 
     if not port:
         port = basic_config_yaml.dic_config['info'].get('port-no') or app.config.get(PORT)
