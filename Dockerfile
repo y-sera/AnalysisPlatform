@@ -1,7 +1,7 @@
 #FROM debian:12-slim AS build
 FROM python:3.9-slim AS build
 RUN apt-get update && \
-    apt-get install --no-install-suggests --no-install-recommends --yes python3-venv gcc libpython3-dev && \
+    apt-get install --no-install-suggests --no-install-recommends --yes python3-venv gcc g++ libpython3-dev && \
     python3 -m venv /venv && \
     /venv/bin/pip install --upgrade pip setuptools wheel
 
